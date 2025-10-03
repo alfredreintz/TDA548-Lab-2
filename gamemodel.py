@@ -13,6 +13,7 @@ class Game:
         self.ballSize = ballSize
         self.players = [Player(self, False, -90, "blue"), Player(self, True, 90, "red")]
         self.currentPlayer = self.players[0]
+        self.currentWind = random.random() * 20 - 10
 
     """ A list containing both players """
     def getPlayers(self):
@@ -44,17 +45,19 @@ class Game:
 
     """ Set the current wind speed, only used for testing """
     def setCurrentWind(self, wind):
-        pass #TODO: this should do something instead of nothing
+        self.currentWind = 10
+        #TODO: this should do something instead of nothing
  
     def getCurrentWind(self):
-        return 0 #TODO: this is just a dummy value
+        return self.currentWind #TODO: this is just a dummy value
 
     """ Start a new round with a random wind value (-10 to +10) """
     def newRound(self):
         #HINT: random.random() gives a random value between 0 and 1
         # multiplying this by 20 gives a random value between 0 and 20
         # how do you shift a value between 0 and 20 to one between -10 and +10?
-        pass #TODO: this should do something instead of nothing
+        self.currentWind = random.random() * 20 - 10
+        #TODO: this should do something instead of nothing
 
 """ Models a player """
 class Player:
