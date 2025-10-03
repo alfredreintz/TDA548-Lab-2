@@ -12,7 +12,6 @@ class Game:
         self.players = [Player(False, -90, "blue"), Player(True, 90, "red")]
         # TODO: "pass" means the constructor does nothing. Clearly it should be doing something.
         # HINT: This constructor needs to create two players according to the rules specified in the assignment text
-        pass 
 
     """ A list containing both players """
     def getPlayers(self):
@@ -94,11 +93,11 @@ class Player:
 
     """ Returns the color of this player (a string)"""
     def getColor(self):
-        return "DUMMY COLOR" #TODO: this is just a dummy value
+        return self.color
 
     """ The x-position of the centre of this players cannon """
     def getX(self):
-        return 0 #TODO: this is just a dummy value
+        return self.position
 
     """ The angle and velocity of the last projectile this player fired, initially (45, 40) """
     def getAim(self):
