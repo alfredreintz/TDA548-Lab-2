@@ -9,8 +9,7 @@ class Game:
     def __init__(self, cannonSize, ballSize):
         self.cannonSize = cannonSize
         self.ballSize = ballSize
-        self.players = [Player(False, -90, "blue"), Player(True, 90, "red")]
-        self.currentPlayerNumber = 0 
+        self.players = [Player(self, False, -90, "blue"), Player(self, True, 90, "red")]
         self.currentPlayer = self.players[0]
         self.currentWind = random.random() * 20 - 10
         # TODO: "pass" means the constructor does nothing. Clearly it should be doing something.
@@ -24,11 +23,11 @@ class Game:
 
     """ The height/width of the cannon """
     def getCannonSize(self):
-        return 0 #TODO: this is just a dummy value
+        return self.cannonSize
 
     """ The radius of cannon balls """
     def getBallSize(self):
-        return 0 #TODO: this is just a dummy value
+        return self.ballSize
 
     """ The current player, i.e. the player whose turn it is """
     def getCurrentPlayer(self):
@@ -67,15 +66,22 @@ class Game:
 
 """ Models a player """
 class Player:
-    def __init__(self, firingDirection, position, color):
+    def __init__(self, gameObj, firingDirection, position, color):
+        self.gameObj = gameObj
         self.firingDirection = firingDirection
         self.position = position
         self.color = color
+
    #TODO: You need to create a constructor here. 
    #HINT: It should probably take the Game that creates it as parameter and some additional properties that differ between players (like firing-direction, position and color)
     
     """ Create and return a projectile starting at the centre of this players cannon. Replaces any previous projectile for this player. """
     def fire(self, angle, velocity):
+        if self.gameObj.getCurrentPlayer() == self.gameObj.players[1]:
+            angle = 180-angle
+
+        self.spawnProjectile = Projectile(angle, velocity, self.gameObj.getCurrentWind(), self.getX(), (self.gameObj.getCannonSize())/2, -110, 110)
+
         # The projectile should start in the middle of the cannon of the firing player
         # HINT: Your job here is to call the constructor of Projectile with all the right values
         # Some are hard-coded, like the boundaries for x-position, others can be found in Game or Player
