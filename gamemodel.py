@@ -9,15 +9,18 @@ class Game:
     def __init__(self, cannonSize, ballSize):
         # TODO: "pass" means the constructor does nothing. Clearly it should be doing something.
         # HINT: This constructor needs to create two players according to the rules specified in the assignment text
-        pass 
+        self.cannonSize = cannonSize
+        self.ballSize = ballSize
+        self.players = [Player(self, False, -90, "blue"), Player(self, True, 90, "red")]
+        self.currentPlayer = self.players[0]
 
     """ A list containing both players """
     def getPlayers(self):
-        return [] #TODO: this is just a dummy value
+        return self.players #TODO: this is just a dummy value
 
     """ The height/width of the cannon """
     def getCannonSize(self):
-        return 0 #TODO: this is just a dummy value
+        return self.cannonSize #TODO: this is just a dummy value
 
     """ The radius of cannon balls """
     def getBallSize(self):
@@ -25,25 +28,24 @@ class Game:
 
     """ The current player, i.e. the player whose turn it is """
     def getCurrentPlayer(self):
-        return None #TODO: this is just a dummy value
+        return self.currentPlayer #TODO: this is just a dummy value
 
     """ The opponent of the current player """
     def getOtherPlayer(self):
-        return None #TODO: this is just a dummy value
+        return self.players[0] if self.currentPlayer == self.players[1] else self.players[1] #TODO: this is just a dummy value
     
     """ The number (0 or 1) of the current player. This should be the position of the current player in getPlayers(). """
     def getCurrentPlayerNumber(self):
-        return 0 #TODO: this is just a dummy value
+        return 0 if self.currentPlayer == self.players[0] else 1 #TODO: this is just a dummy value
     
     """ Switch active player """
     def nextPlayer(self):
-        pass #TODO: this should do something instead of nothing
+        self.currentPlayer = self.getOtherPlayer()
 
     """ Set the current wind speed, only used for testing """
     def setCurrentWind(self, wind):
         pass #TODO: this should do something instead of nothing
-
-    
+ 
     def getCurrentWind(self):
         return 0 #TODO: this is just a dummy value
 
@@ -58,6 +60,11 @@ class Game:
 class Player:
    #TODO: You need to create a constructor here. 
    #HINT: It should probably take the Game that creates it as parameter and some additional properties that differ between players (like firing-direction, position and color)
+    def __init__(self, gameObj, fireDirection, position, color):
+        self.gameObj = gameObj
+        self.fireDirection = fireDirection
+        self.position = position
+        self.color = color
     
     """ Create and return a projectile starting at the centre of this players cannon. Replaces any previous projectile for this player. """
     def fire(self, angle, velocity):
@@ -85,11 +92,11 @@ class Player:
 
     """ Returns the color of this player (a string)"""
     def getColor(self):
-        return "DUMMY COLOR" #TODO: this is just a dummy value
+        return self.color #TODO: this is just a dummy value
 
     """ The x-position of the centre of this players cannon """
     def getX(self):
-        return 0 #TODO: this is just a dummy value
+        return self.position #TODO: this is just a dummy value
 
     """ The angle and velocity of the last projectile this player fired, initially (45, 40) """
     def getAim(self):
