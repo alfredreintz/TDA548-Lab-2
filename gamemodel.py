@@ -10,6 +10,8 @@ class Game:
         self.cannonSize = cannonSize
         self.ballSize = ballSize
         self.players = [Player(False, -90, "blue"), Player(True, 90, "red")]
+        self.currentPlayerNumber = 0 
+        self.currentPlayer = self.players[0]
         # TODO: "pass" means the constructor does nothing. Clearly it should be doing something.
         # HINT: This constructor needs to create two players according to the rules specified in the assignment text
 
@@ -29,19 +31,26 @@ class Game:
 
     """ The current player, i.e. the player whose turn it is """
     def getCurrentPlayer(self):
-        return None #TODO: this is just a dummy value
+        return self.currentPlayer
 
     """ The opponent of the current player """
     def getOtherPlayer(self):
-        return None #TODO: this is just a dummy value
+        if self.currentPlayer == self.players[0]:
+            return self.players[1]
+        else:
+            return self.players[0]
+        #return None #TODO: this is just a dummy value
     
     """ The number (0 or 1) of the current player. This should be the position of the current player in getPlayers(). """
     def getCurrentPlayerNumber(self):
-        return 0 #TODO: this is just a dummy value
+        if self.currentPlayer == self.players[0]:
+            return 0
+        else:
+            return 1
     
     """ Switch active player """
     def nextPlayer(self):
-        pass #TODO: this should do something instead of nothing
+        self.currentPlayer = self.getOtherPlayer()
 
     """ Set the current wind speed, only used for testing """
     def setCurrentWind(self, wind):
