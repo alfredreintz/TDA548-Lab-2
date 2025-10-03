@@ -12,6 +12,7 @@ class Game:
         self.players = [Player(False, -90, "blue"), Player(True, 90, "red")]
         self.currentPlayerNumber = 0 
         self.currentPlayer = self.players[0]
+        self.currentWind = random.random() * 20 - 10
         # TODO: "pass" means the constructor does nothing. Clearly it should be doing something.
         # HINT: This constructor needs to create two players according to the rules specified in the assignment text
 
@@ -54,18 +55,15 @@ class Game:
 
     """ Set the current wind speed, only used for testing """
     def setCurrentWind(self, wind):
-        pass #TODO: this should do something instead of nothing
+        self.currentWind = wind
 
     
     def getCurrentWind(self):
-        return 0 #TODO: this is just a dummy value
+        return self.currentWind
 
     """ Start a new round with a random wind value (-10 to +10) """
     def newRound(self):
-        #HINT: random.random() gives a random value between 0 and 1
-        # multiplying this by 20 gives a random value between 0 and 20
-        # how do you shift a value between 0 and 20 to one between -10 and +10?
-        pass #TODO: this should do something instead of nothing
+        self.currentWind = random.random() * 20 - 10
 
 """ Models a player """
 class Player:
