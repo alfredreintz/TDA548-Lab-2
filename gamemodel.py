@@ -25,7 +25,7 @@ class Game:
 
     """ The radius of cannon balls """
     def getBallSize(self):
-        return 0 #TODO: this is just a dummy value
+        return self.ballSize #TODO: this is just a dummy value
 
     """ The current player, i.e. the player whose turn it is """
     def getCurrentPlayer(self):
@@ -45,7 +45,7 @@ class Game:
 
     """ Set the current wind speed, only used for testing """
     def setCurrentWind(self, wind):
-        self.currentWind = 10
+        self.currentWind = wind
         #TODO: this should do something instead of nothing
  
     def getCurrentWind(self):
@@ -74,7 +74,15 @@ class Player:
         # The projectile should start in the middle of the cannon of the firing player
         # HINT: Your job here is to call the constructor of Projectile with all the right values
         # Some are hard-coded, like the boundaries for x-position, others can be found in Game or Player
-        return None #TODO: this is just a dummy value
+
+        # def __init__(self, angle, velocity, wind, xPos, yPos, xLower, xUpper):
+        currentPlayer = self.gameObj.getCurrentPlayerNumber()
+
+        if currentPlayer == 1: angle = 180 - angle
+ 
+        fireProjectile = Projectile(angle, velocity, self.gameObj.getCurrentWind(), self.getX(), self.gameObj.getCannonSize() / 2, -110, 110)
+
+        return fireProjectile #TODO: this is just a dummy value
 
     """ Gives the x-distance from this players cannon to a projectile. If the cannon and the projectile touch (assuming the projectile is on the ground and factoring in both cannon and projectile size) this method should return 0"""
     def projectileDistance(self, proj):
