@@ -9,7 +9,7 @@ class Game:
     def __init__(self, cannonSize, ballSize):
         self.cannonSize = cannonSize
         self.ballSize = ballSize
-        self.players = [Player(self, False, -90, "blue"), Player(self, True, 90, "red")]
+        self.players = [Player(False, -90, "blue"), Player(True, 90, "red")]
         # TODO: "pass" means the constructor does nothing. Clearly it should be doing something.
         # HINT: This constructor needs to create two players according to the rules specified in the assignment text
         pass 
@@ -18,7 +18,7 @@ class Game:
     def getPlayers(self):
         return self.players
 
-       # return [] #TODO: this is just a dummy value
+        #return [] #TODO: this is just a dummy value
 
     """ The height/width of the cannon """
     def getCannonSize(self):
