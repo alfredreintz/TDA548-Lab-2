@@ -55,7 +55,6 @@ class Game:
     """ Set the current wind speed, only used for testing """
     def setCurrentWind(self, wind):
         self.currentWind = wind
-
     
     def getCurrentWind(self):
         return self.currentWind
@@ -85,7 +84,7 @@ class Player:
         # The projectile should start in the middle of the cannon of the firing player
         # HINT: Your job here is to call the constructor of Projectile with all the right values
         # Some are hard-coded, like the boundaries for x-position, others can be found in Game or Player
-        return None #TODO: this is just a dummy value
+        return self.spawnProjectile
 
     """ Gives the x-distance from this players cannon to a projectile. If the cannon and the projectile touch (assuming the projectile is on the ground and factoring in both cannon and projectile size) this method should return 0"""
     def projectileDistance(self, proj):
