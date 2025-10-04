@@ -78,22 +78,36 @@ class Player:
     def fire(self, angle, velocity):
         if self.gameObj.getCurrentPlayer() == self.gameObj.players[1]:
             angle = 180-angle
-
-        self.spawnProjectile = Projectile(angle, velocity, self.gameObj.getCurrentWind(), self.getX(), (self.gameObj.getCannonSize())/2, -110, 110)
+        spawnProjectile = Projectile(angle, velocity, self.gameObj.getCurrentWind(), self.getX(), (self.gameObj.getCannonSize())/2, -110, 110)
+        return spawnProjectile
 
         # The projectile should start in the middle of the cannon of the firing player
         # HINT: Your job here is to call the constructor of Projectile with all the right values
         # Some are hard-coded, like the boundaries for x-position, others can be found in Game or Player
-        return self.spawnProjectile
 
     """ Gives the x-distance from this players cannon to a projectile. If the cannon and the projectile touch (assuming the projectile is on the ground and factoring in both cannon and projectile size) this method should return 0"""
     def projectileDistance(self, proj):
+        cannonPos = self.getX()
+        projPos = proj.xPos
+        
+        # Nästa steg: Avgör var projektilen landar i förhållande till
+        # kanonen, skapa ett uttryck som generalliserar avståndsuträkning
+        # med ex. abs() eller motsvarande
+        # Utöver det; värdet blir några l.e fel, se över så att uttrycket stämmer.
+
+        distance = abs(cannonPos - projPos)
+        if distance <= self.gameObj.getBallSize() + self.gameObj.getCannonSize()/2 and distance > 0:
+            return 0
+        else:
+            return distance 
+
+
         # HINT: both self (a Player) and proj (a Projectile) have getX()-methods.
         # HINT: This method should give a negative value if the projectile missed to the left and positive if it missed to the right.
         # The distance should be how far the projectile and cannon are from touching, not the distance between their centers.
         # You probably need to use getCannonSize and getBallSize from Game to compensate for the size of cannons/cannonballs
  
-        return 0 #TODO: this is a dummy value.
+
 
     """ The current score of this player """
     def getScore(self):
