@@ -1,8 +1,6 @@
 from math import sin,cos,radians
 import random
 
-#TODO: Deal with all TODOs in this file and also remove the TODO and HINT comments.
-
 """ This is the model of the game"""
 class Game:
     """ Create a game with a given size of cannon (length of sides) and projectiles (radius) """
@@ -12,14 +10,10 @@ class Game:
         self.players = [Player(self, False, -90, "blue"), Player(self, True, 90, "red")]
         self.currentPlayer = self.players[0]
         self.currentWind = random.random() * 20 - 10
-        # TODO: "pass" means the constructor does nothing. Clearly it should be doing something.
-        # HINT: This constructor needs to create two players according to the rules specified in the assignment text
 
     """ A list containing both players """
     def getPlayers(self):
         return self.players
-
-        #return [] #TODO: this is just a dummy value
 
     """ The height/width of the cannon """
     def getCannonSize(self):
@@ -39,7 +33,6 @@ class Game:
             return self.players[1]
         else:
             return self.players[0]
-        #return None #TODO: this is just a dummy value
     
     """ The number (0 or 1) of the current player. This should be the position of the current player in getPlayers(). """
     def getCurrentPlayerNumber(self):
@@ -70,52 +63,38 @@ class Player:
         self.firingDirection = firingDirection
         self.position = position
         self.color = color
-
-   #TODO: You need to create a constructor here. 
-   #HINT: It should probably take the Game that creates it as parameter and some additional properties that differ between players (like firing-direction, position and color)
+        self.score = 0
     
     """ Create and return a projectile starting at the centre of this players cannon. Replaces any previous projectile for this player. """
     def fire(self, angle, velocity):
+        self.latestAngle = angle
+        self.latestVelocity = velocity
         if self.gameObj.getCurrentPlayer() == self.gameObj.players[1]:
             angle = 180-angle
         spawnProjectile = Projectile(angle, velocity, self.gameObj.getCurrentWind(), self.getX(), (self.gameObj.getCannonSize())/2, -110, 110)
         return spawnProjectile
 
-        # The projectile should start in the middle of the cannon of the firing player
-        # HINT: Your job here is to call the constructor of Projectile with all the right values
-        # Some are hard-coded, like the boundaries for x-position, others can be found in Game or Player
-
     """ Gives the x-distance from this players cannon to a projectile. If the cannon and the projectile touch (assuming the projectile is on the ground and factoring in both cannon and projectile size) this method should return 0"""
     def projectileDistance(self, proj):
         cannonPos = self.getX()
-        projPos = proj.xPos
-        
-        # Nästa steg: Avgör var projektilen landar i förhållande till
-        # kanonen, skapa ett uttryck som generalliserar avståndsuträkning
-        # med ex. abs() eller motsvarande
-        # Utöver det; värdet blir några l.e fel, se över så att uttrycket stämmer.
+        projPos = proj.getX()
 
-        distance = abs(cannonPos - projPos)
-        if distance <= self.gameObj.getBallSize() + self.gameObj.getCannonSize()/2 and distance > 0:
+        if abs(cannonPos - projPos) <= (self.gameObj.getCannonSize() / 2 + self.gameObj.getBallSize()):
             return 0
+        elif projPos > cannonPos:
+            deltaDistance = projPos - self.gameObj.getBallSize() - (cannonPos + self.gameObj.getCannonSize() / 2) 
         else:
-            return distance 
-
-
-        # HINT: both self (a Player) and proj (a Projectile) have getX()-methods.
-        # HINT: This method should give a negative value if the projectile missed to the left and positive if it missed to the right.
-        # The distance should be how far the projectile and cannon are from touching, not the distance between their centers.
-        # You probably need to use getCannonSize and getBallSize from Game to compensate for the size of cannons/cannonballs
- 
-
+            deltaDistance = (cannonPos - self.gameObj.getCannonSize() / 2) - (projPos + self.gameObj.getBallSize()) 
+            deltaDistance = -deltaDistance
+        return deltaDistance
 
     """ The current score of this player """
     def getScore(self):
-        return 0 #TODO: this is just a dummy value
+        return self.score
 
     """ Increase the score of this player by 1."""
     def increaseScore(self):
-        pass #TODO: this should do something instead of nothing
+        self.score += 1
 
     """ Returns the color of this player (a string)"""
     def getColor(self):
@@ -127,9 +106,8 @@ class Player:
 
     """ The angle and velocity of the last projectile this player fired, initially (45, 40) """
     def getAim(self):
-        return 0, 0 #TODO: this is just a dummy value 
-
-
+        latestStats = (self.latestAngle, self.latestVelocity)
+        return latestStats
 
 """ Models a projectile (a cannonball, but could be used more generally) """
 class Projectile:
