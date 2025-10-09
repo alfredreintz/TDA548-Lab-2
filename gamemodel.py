@@ -4,7 +4,6 @@ from math import cos, radians, sin
 """ This is the model of the game"""
 class Game:
     """Create a game with a given size of cannon (length of sides) and projectiles (radius)"""
-
     def __init__(self, cannonSize, ballSize):
         self.cannonSize = cannonSize
         self.ballSize = ballSize
@@ -30,17 +29,17 @@ class Game:
 
     """ The opponent of the current player """
     def getOtherPlayer(self):
-        return (
-            self.players[0]
-            if self.currentPlayer == self.players[1]
-            else self.players[1]
-        ) 
-
+        if self.currentPlayer == self.players[0]:
+            return self.players[1]
+        else:
+            return self.players[0]
+    
     """ The number (0 or 1) of the current player. This should be the position of the current player in getPlayers(). """
     def getCurrentPlayerNumber(self):
-        return (
-            0 if self.currentPlayer == self.players[0] else 1
-        )
+        if self.currentPlayer == self.players[0]:
+            return 0
+        else:
+            return 1
 
     """ Switch active player """
     def nextPlayer(self):
