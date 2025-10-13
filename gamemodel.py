@@ -10,6 +10,8 @@ class Game:
         self.players = [Player(self, False, -90, "blue"), Player(self, True, 90, "red")]
         self.currentPlayer = self.players[0]
         self.currentWind = random.random() * 20 - 10
+        self.latestAngle = 0
+        self.latestVelocity = 0
 
     """ A list containing both players """
     def getPlayers(self):
