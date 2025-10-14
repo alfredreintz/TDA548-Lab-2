@@ -46,17 +46,15 @@ class Game:
         self.currentPlayer = self.getOtherPlayer()
 
     """ Set the current wind speed, only used for testing """
-
     def setCurrentWind(self, wind):
         self.currentWind = wind
-
+    
     def getCurrentWind(self):
-        return self.currentWind  # TODO: this is just a dummy value
+        return self.currentWind
 
     """ Start a new round with a random wind value (-10 to +10) """
     def newRound(self):
        self.currentWind = random.random() * 20 - 10
-
 
 """ Models a player """
 class Player:
@@ -88,7 +86,7 @@ class Player:
             110,
         )
 
-        return fireProjectile # TODO: this is just a dummy value
+        return fireProjectile 
 
     """ Gives the x-distance from this players cannon to a projectile. If the cannon and the projectile touch (assuming the projectile is on the ground and factoring in both cannon and projectile size) this method should return 0"""
     def projectileDistance(self, proj):
@@ -103,7 +101,6 @@ class Player:
             deltaDistance = proj.getX() + self.gameObj.getBallSize() - (self.getX() - self.gameObj.getCannonSize() / 2)
 
         return deltaDistance
-
 
     """ The current score of this player """
     def getScore(self):
@@ -123,8 +120,7 @@ class Player:
 
     """ The angle and velocity of the last projectile this player fired, initially (45, 40) """
     def getAim(self):
-        return (self.latestAngle, self.latestVelocity)  # TODO: this is just a dummy value
-
+        return (self.latestAngle, self.latestVelocity)
 
 """ Models a projectile (a cannonball, but could be used more generally) """
 class Projectile:
@@ -136,7 +132,6 @@ class Projectile:
     xPos and yPos: The initial position of this projectile
     xLower and xUpper: The lowest and highest x-positions allowed
     """
-
     def __init__(self, angle, velocity, wind, xPos, yPos, xLower, xUpper):
         self.yPos = yPos
         self.xPos = xPos
