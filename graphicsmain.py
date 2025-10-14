@@ -102,11 +102,30 @@ class GameGraphics:
         self.scoreText.draw(self.win)
         self.draw_scores[playerNr] = self.scoreText
 
-    # def explode(self, playerNr):
-    #     p = self.game.getPlayers()[playerNr]
-    #     x = p.getX()
-    #     color = p.getColor()        
+    def explode(self, playerNr):
+        p = self.game.getPlayers()[playerNr]
+        otherPlayer = self.game.getOtherPlayer()
+        x = otherPlayer.getX()
+        color = p.getColor()
+        size = self.game.getCannonSize()
+        radius = self.game.getBallSize()
+        self.exp = Circle(Point(x,0), radius)
+        self.exp.setFill(color)          
+        self.exp.setOutline(color)
+        self.exp.draw(self.win)
 
+        while radius <= 2* size:
+            self.exp.undraw()
+            self.exp = Circle(Point(x,0), radius)
+            self.exp.setFill(color)          
+            self.exp.setOutline(color)
+            self.exp.draw(self.win)
+            radius += 0.5
+
+
+            update(50)
+        self.exp.undraw()
+            
 
 
     def play(self):
@@ -134,7 +153,7 @@ class GameGraphics:
 
             if distance == 0.0:
                 player.increaseScore()
-                # self.game.explode()
+                self.explode(self.game.getCurrentPlayerNumber())
                 self.updateScore(self.game.getCurrentPlayerNumber())
                 self.game.newRound()
 
