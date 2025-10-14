@@ -22,6 +22,9 @@ class GameGraphics:
     def drawCanon(self,playerNr):
         # draw the cannon
         # TODO: draw a square with the size of the cannon with the color
+        # and the position of the player with number playerNr.
+        # After the drawing, return the rectangle object.
+
         player = self.game.getPlayers()[playerNr]
         x = player.getX()
         size = self.game.getCannonSize()
@@ -31,8 +34,6 @@ class GameGraphics:
         cannon.setFill(color)
         cannon.draw(self.win)
         return cannon
-        # and the position of the player with number playerNr.
-        # After the drawing, return the rectangle object.
 
     def drawScore(self,playerNr):
         player = self.game.getPlayers()[playerNr]
@@ -103,10 +104,10 @@ class GameGraphics:
         self.draw_scores[playerNr] = self.scoreText
 
     def explode(self, playerNr):
-        p = self.game.getPlayers()[playerNr]
+        player = self.game.getPlayers()[playerNr]
         otherPlayer = self.game.getOtherPlayer()
         x = otherPlayer.getX()
-        color = p.getColor()
+        color = player.getColor()
         size = self.game.getCannonSize()
         radius = self.game.getBallSize()
         self.exp = Circle(Point(x,0), radius)
