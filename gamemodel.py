@@ -10,8 +10,6 @@ class Game:
         self.players = [Player(self, False, -90, "blue"), Player(self, True, 90, "red")]
         self.currentPlayer = self.players[0]
         self.currentWind = random.random() * 20 - 10
-        self.latestAngle = 0
-        self.latestVelocity = 0
 
     """ A list containing both players """
     def getPlayers(self):
@@ -35,7 +33,7 @@ class Game:
             return self.players[1]
         else:
             return self.players[0]
-    
+
     """ The number (0 or 1) of the current player. This should be the position of the current player in getPlayers(). """
     def getCurrentPlayerNumber(self):
         if self.currentPlayer == self.players[0]:
@@ -48,17 +46,15 @@ class Game:
         self.currentPlayer = self.getOtherPlayer()
 
     """ Set the current wind speed, only used for testing """
-
     def setCurrentWind(self, wind):
         self.currentWind = wind
 
     def getCurrentWind(self):
-        return self.currentWind  # TODO: this is just a dummy value
+        return self.currentWind
 
     """ Start a new round with a random wind value (-10 to +10) """
     def newRound(self):
        self.currentWind = random.random() * 20 - 10
-
 
 """ Models a player """
 class Player:
@@ -68,6 +64,8 @@ class Player:
         self.position = position
         self.color = color
         self.score = 0
+        self.latestAngle = 0
+        self.latestVelocity = 0
 
     """ Create and return a projectile starting at the centre of this players cannon. Replaces any previous projectile for this player. """
     def fire(self, angle, velocity):
@@ -88,7 +86,7 @@ class Player:
             110,
         )
 
-        return fireProjectile # TODO: this is just a dummy value
+        return fireProjectile 
 
     """ Gives the x-distance from this players cannon to a projectile. If the cannon and the projectile touch (assuming the projectile is on the ground and factoring in both cannon and projectile size) this method should return 0"""
     def projectileDistance(self, proj):
@@ -103,7 +101,6 @@ class Player:
             deltaDistance = proj.getX() + self.gameObj.getBallSize() - (self.getX() - self.gameObj.getCannonSize() / 2)
 
         return deltaDistance
-
 
     """ The current score of this player """
     def getScore(self):
@@ -123,28 +120,26 @@ class Player:
 
     """ The angle and velocity of the last projectile this player fired, initially (45, 40) """
     def getAim(self):
-        return (self.latestAngle, self.latestVelocity)  # TODO: this is just a dummy value
-
+        return (self.latestAngle, self.latestVelocity)
 
 """ Models a projectile (a cannonball, but could be used more generally) """
 class Projectile:
     """
-    Constructor parameters:
-    angle and velocity: the initial angle and velocity of the projectile
-        angle 0 means straight east (positive x-direction) and 90 straight up
-    wind: The wind speed value affecting this projectile
-    xPos and yPos: The initial position of this projectile
-    xLower and xUpper: The lowest and highest x-positions allowed
+        Constructor parameters:
+        angle and velocity: the initial angle and velocity of the projectile 
+            angle 0 means straight east (positive x-direction) and 90 straight up
+        wind: The wind speed value affecting this projectile
+        xPos and yPos: The initial position of this projectile
+        xLower and xUpper: The lowest and highest x-positions allowed
     """
-
     def __init__(self, angle, velocity, wind, xPos, yPos, xLower, xUpper):
         self.yPos = yPos
         self.xPos = xPos
         self.xLower = xLower
         self.xUpper = xUpper
         theta = radians(angle)
-        self.xvel = velocity * cos(theta)
-        self.yvel = velocity * sin(theta)
+        self.xvel = velocity*cos(theta)
+        self.yvel = velocity*sin(theta)
         self.wind = wind
 
     """ 
@@ -153,17 +148,22 @@ class Projectile:
          for large values the projectile may move erratically)
     """
     def update(self, time):
-        yvel1 = self.yvel - 9.8 * time
-        xvel1 = self.xvel + self.wind * time
+        # Compute new velocity based on acceleration from gravity/wind
+        yvel1 = self.yvel - 9.8*time
+        xvel1 = self.xvel + self.wind*time
 
+        # Move based on the average velocity in the time period 
         self.xPos = self.xPos + time * (self.xvel + xvel1) / 2.0
         self.yPos = self.yPos + time * (self.yvel + yvel1) / 2.0
 
+        # make sure yPos >= 0
         self.yPos = max(self.yPos, 0)
 
+        # Make sure xLower <= xPos <= mUpper   
         self.xPos = max(self.xPos, self.xLower)
         self.xPos = min(self.xPos, self.xUpper)
 
+        # Update velocities
         self.yvel = yvel1
         self.xvel = xvel1
 
@@ -177,3 +177,4 @@ class Projectile:
     """ The current y-position (height) of the projectile". Should never be below 0. """
     def getY(self):
         return self.yPos
+
